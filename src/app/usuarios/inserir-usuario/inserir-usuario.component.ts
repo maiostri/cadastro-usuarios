@@ -1,5 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
 import { UsuariosService } from './../../service/usuarios.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Usuario from 'src/app/model/usuario';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -8,7 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './inserir-usuario.component.html',
   styleUrls: ['./inserir-usuario.component.css'],
 })
-export class InserirUsuarioComponent {
+export class InserirUsuarioComponent implements OnInit {
   usuario: Usuario = new Usuario();
   email = new FormControl('', [Validators.required, Validators.email]);
   nome = new FormControl('', [Validators.required]);
@@ -19,7 +20,21 @@ export class InserirUsuarioComponent {
   }
 
   
-  constructor(private usuariosService: UsuariosService) {}
+  constructor(private usuariosService: UsuariosService, 
+    private router: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    let id = this.router.snapshot.params['id'];
+    if (id) {
+      this.usuario = this.usuariosService.buscaPorId(id)!;
+
+      console.log('usuuario encontrado', this.usuario);
+
+      this.email.setValue(this.usuario.email);
+      this.nome.setValue(this.usuario.nome);
+      this.cpf.setValue(this.usuario.cpf);
+    }
+  }
 
   insereUsuario = () => {
     

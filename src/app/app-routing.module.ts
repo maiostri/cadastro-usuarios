@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'usuario/:id',
     component: UsuarioDetalheComponent
+  },
+  {
+    path: 'usuario/editar/:id',
+    component: InserirUsuarioComponent
   }
 ];
 

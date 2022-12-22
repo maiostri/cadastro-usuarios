@@ -19,6 +19,17 @@ export class UsuariosService {
 
   buscaPorId = (id: number) => Array.from(this.usuarios).find(u => u.id == id);
 
+  buscaPorNome = (nome: string) => 
+    Array.from(this.usuarios).filter(u => u.nome.toUpperCase().includes(nome.toUpperCase()));
+
   insereUsuario = (usuario: Usuario) => this.usuarios.add(usuario);
 
+  removeUsuario = (usuario: Usuario) => {
+    let usuarios = Array.from(this.usuarios).filter(u => u.id !== usuario.id);
+    this.usuarios = new Set<Usuario>(usuarios);
+    alert('Usuário removido!');
+    console.log('usuários atuais', this.usuarios);
+  }
+
+  // .splice(usuarios.indexOf(usuario), 1)
 }
